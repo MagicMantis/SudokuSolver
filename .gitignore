@@ -1,2 +1,4 @@
 puzzles
-.idea/workspace.xml
+.idea/*
+__pycache__/*
+
