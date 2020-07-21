@@ -18,11 +18,11 @@ class SudokuLoader:
 
         self.puzzle_count = len(self.__puzzle_strings)
 
-    def load(self, puzzle_index, solve_queue):
-        self.puzzle = Puzzle(self.__puzzle_strings[puzzle_index], solve_queue)
-        self.__solution = Puzzle(self.__solution_strings[puzzle_index])
+    def load(self, puzzle_index, solve_queue) -> (Puzzle, Puzzle):
+        puzzle = Puzzle(self.__puzzle_strings[puzzle_index], solve_queue)
+        solution = Puzzle(self.__solution_strings[puzzle_index])
 
-        return self.puzzle
+        return puzzle, solution
 
-    def check_solution(self, solution):
-        return solution == self.__solution
+    def get_strings(self):
+        return zip(self.__puzzle_strings, self.__solution_strings)

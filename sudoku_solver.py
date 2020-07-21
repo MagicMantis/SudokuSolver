@@ -1,40 +1,15 @@
-from sudoku_loader import SudokuLoader
 from collections import deque
 from logger import Logger
-
+from puzzle import Puzzle
 
 class SudokuSolver:
 
     # Globally set logging
     logging = True
 
-    def __init__(self):
-
-        # Load the puzzle
-        self.loader = SudokuLoader()
-        if SudokuSolver.logging:
-            print(self.loader.puzzle_count, "puzzles loaded")
-
-        correct = 0
-
-        for i in range(self.loader.puzzle_count):
-
-            self.solve_queue = deque()
-            self.puzzle = self.loader.load(i, self.solve_queue)
-            if SudokuSolver.logging:
-                self.display()
-
-            # Solve the puzzleS
-            self.solve()
-
-            # Check the solution
-            if self.loader.check_solution(self.puzzle):
-                print("Correct!", i)
-                correct += 1
-            else:
-                print("Bad Solution!", i)
-
-        print("Correctly Completed:", correct, "out of", self.loader.puzzle_count)
+    def __init__(self, puzzle: Puzzle, solve_queue: deque):
+        self.puzzle = puzzle
+        self.solve_queue = solve_queue
 
     def solve(self):
         for row_index in range(0, len(self.puzzle.squares)):
@@ -68,6 +43,3 @@ class SudokuSolver:
     @staticmethod
     def get_box(row, col):
         return int(row / 3) * 3 + int(col / 3)
-
-
-SudokuSolver()

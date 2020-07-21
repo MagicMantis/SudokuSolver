@@ -32,7 +32,7 @@ class Square:
                 print(self.row, self.col, "removed: ", x, self.valid)
             if len(self.valid) == 1:
                 if Logger.logging:
-                    (self.row, self.col, "Invalidate led to setting to ", self.valid)
+                    print(self.row, self.col, "Invalidate led to setting to ", self.valid)
                 self.set(self.valid[0])
 
         self.solve_queue.append((self.row, self.row_index, x, False))
