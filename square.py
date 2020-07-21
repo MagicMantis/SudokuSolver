@@ -21,9 +21,9 @@ class Square:
         self.value = x
         self.valid = []
 
-        self.solve_queue.append((self.row, self.row_index, x, True))
-        self.solve_queue.append((self.col, self.col_index, x, True))
-        self.solve_queue.append((self.box, self.box_index, x, True))
+        self.solve_set.add((self.row, self.row_index, x, True))
+        self.solve_set.add((self.col, self.col_index, x, True))
+        self.solve_set.add((self.box, self.box_index, x, True))
 
     def invalidate(self, x):
         if x in self.valid:
@@ -35,9 +35,9 @@ class Square:
                     print(self.row, self.col, "Invalidate led to setting to ", self.valid)
                 self.set(self.valid[0])
 
-        self.solve_queue.append((self.row, self.row_index, x, False))
-        self.solve_queue.append((self.col, self.col_index, x, False))
-        self.solve_queue.append((self.box, self.box_index, x, False))
+        self.solve_set.add((self.row, self.row_index, x, False))
+        self.solve_set.add((self.col, self.col_index, x, False))
+        self.solve_set.add((self.box, self.box_index, x, False))
 
     # Return valid values
     def options(self):

@@ -5,7 +5,7 @@ from logger import Logger
 
 class Puzzle:
 
-    def __init__(self, puzzle_string, solve_queue = None):
+    def __init__(self, puzzle_string, solve_set = None):
         self.squares = [[Square(int(puzzle_string[i*9+x])) for x in range(0, 9)] for i in range(0, 9)]
         s = np.array(self.squares)
 
@@ -17,10 +17,10 @@ class Puzzle:
                 box_arrays[Puzzle.get_box(row, col)].append(self.squares[row][col])
         self.boxes = [Box(array) for array in box_arrays]
 
-        self.solve_queue = solve_queue
+        self.solve_set = solve_set
         for row in self.squares:
             for square in row:
-                square.solve_queue = self.solve_queue
+                square.solve_set = self.solve_set
 
 
     def get_unsolved(self):

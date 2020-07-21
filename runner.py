@@ -1,7 +1,7 @@
 from sudoku_loader import SudokuLoader
 from sudoku_solver import SudokuSolver
+from datetime import datetime
 from puzzle import Puzzle
-from collections import deque
 from multiprocessing import Pool
 
 
@@ -11,11 +11,11 @@ def solve_puzzle(puzzle_strings):
 
     puzzle_id = puzzle_strings[0]
 
-    solve_queue = deque()
-    puzzle = Puzzle(puzzle_strings[1][0], solve_queue)
+    solve_set = set()
+    puzzle = Puzzle(puzzle_strings[1][0], solve_set)
     solution = Puzzle(puzzle_strings[1][1])
 
-    solver = SudokuSolver(puzzle, solve_queue)
+    solver = SudokuSolver(puzzle, solve_set)
     solver.solve()
 
     if solver.puzzle == solution:
@@ -31,8 +31,12 @@ if __name__ == "__main__":
     loader = SudokuLoader()
     print(loader.puzzle_count, "puzzles loaded")
 
+    now = datetime.now()
+    limit = 10000
+
     # solve them
     workers = Pool(16)
-    jobs = enumerate(loader.get_strings())
+    jobs = enumerate(loader.get_strings(limit))
     result = workers.map(solve_puzzle, jobs)
-    print("Correctly Completed:", sum(result), "out of", loader.puzzle_count)
+    print("Correctly Completed:", sum(result), "out of", limit)
+    print("Took ", datetime.now()-now, "to solve", limit)

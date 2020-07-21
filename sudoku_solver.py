@@ -7,9 +7,9 @@ class SudokuSolver:
     # Globally set logging
     logging = True
 
-    def __init__(self, puzzle: Puzzle, solve_queue: deque):
+    def __init__(self, puzzle: Puzzle, solve_set: set):
         self.puzzle = puzzle
-        self.solve_queue = solve_queue
+        self.solve_set = solve_set
 
     def solve(self):
         for row_index in range(0, len(self.puzzle.squares)):
@@ -19,8 +19,8 @@ class SudokuSolver:
                     square.set(square.value)
                 self.display()
 
-        while len(self.solve_queue) > 0 and self.puzzle.get_unsolved() > 0:
-            solve = self.solve_queue.popleft()
+        while len(self.solve_set) > 0 and self.puzzle.get_unsolved() > 0:
+            solve = self.solve_set.pop()
             group = solve[0]
             index = solve[1]
             value = solve[2]
